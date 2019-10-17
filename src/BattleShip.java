@@ -9,10 +9,14 @@ public class BattleShip {
 	public static final int SUNK_SHIP_SYMBOL = 'X';
 	public static final int EMPTY_SYMBOL = '.';
 	
+	public static final int MAX_SHOTS = 20;
 	public static final int NUM_SHIPS = 10;
 	public static final int DIMENSION = 8;	
 	static char[][] matrix = new char[DIMENSION][DIMENSION];
 	static boolean gameOver;
+	
+	static int remainingShots;
+	static int sunkShipCounter;
 		
 	public static void main(String[] args) {
 		
@@ -23,6 +27,8 @@ public class BattleShip {
 		gameOver = false;
 	    initMatrix();
 	    addShipsToMatrix();
+	    sunkShipCounter = 0;
+    	remainingShots = MAX_SHOTS;
 	    	     
 	    while(!gameOver) {
 	    	printMatrix(true);
@@ -31,10 +37,23 @@ public class BattleShip {
 	    	System.out.println("Enter column (Number): ");
 	    	number = input.nextInt();
 	    	shoot(letter, number);
+	    	checkGameOver();
+	    	
 	    }
 	     
 	}
 	
+	
+	private static void checkGameOver() {
+		if (sunkShipCounter >= NUM_SHIPS || remainingShots <= 0) {
+			gameOver = true;
+			
+		}
+		
+		
+	}
+
+
 	private static void shoot(char letter, int number) {
 		
 		int row = letter - 'A';
@@ -42,6 +61,7 @@ public class BattleShip {
 		
 		if (matrix[row][col] == SHIP_SYMBOL) {
 			matrix[row][col] = SUNK_SHIP_SYMBOL;
+			sunkShipCounter ++;
 		} else {
 			if (matrix[row][col] == EMPTY_SYMBOL) {
 				matrix[row][col] = EMPTY_SYMBOL;
