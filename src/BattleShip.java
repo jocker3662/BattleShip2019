@@ -40,10 +40,22 @@ public class BattleShip {
 	    	checkGameOver();
 	    	
 	    }
+	    showResult();
 	     
 	}
 	
 	
+	private static void showResult() {
+		
+		if(sunkShipCounter >= NUM_SHIPS) {
+			System.out.println("YOU WIN !!!!");
+		} else {
+			System.out.println("No remaining shots :(");
+		}
+		
+	}
+
+
 	private static void checkGameOver() {
 		if (sunkShipCounter >= NUM_SHIPS || remainingShots <= 0) {
 			gameOver = true;
@@ -58,6 +70,8 @@ public class BattleShip {
 		
 		int row = letter - 'A';
 		int col = number - 1;
+		
+		remainingShots --;
 		
 		if (matrix[row][col] == SHIP_SYMBOL) {
 			matrix[row][col] = SUNK_SHIP_SYMBOL;
